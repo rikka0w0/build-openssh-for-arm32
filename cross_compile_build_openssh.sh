@@ -8,7 +8,7 @@ function cross_compile_build_openssh() {
   ssh_prefix="/usr"
   ssh_privsep_usr="root"
   ssh_privsep_path="/etc/ssh/empty"
-  ssh_pid_dir="/etc/ssh"
+  ssh_pid_dir="/var/run"
   ssh_cfg_dir="/etc/ssh"
 
   zlib_arm_build_dir="$PWD/zlib/$cross_compile_build_dir"
