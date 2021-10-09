@@ -15,8 +15,8 @@ sudo rm gcc-linaro-4.9-2016.02-x86_64_arm-linux-gnueabihf.tar.xz	# Delete the ar
 
 ## Libraries Version (Step 2: Download Relevant Libraries)
 * `zlib` (1.2.11)
-* `openssl` (1.0.2c)
-* `openssh` (7.1p1)
+* `openssl` (1.0.2k)
+* `openssh` (7.2p2)
 See `url.txt`
 
 ## Step 3: Generate key & authorized_keys

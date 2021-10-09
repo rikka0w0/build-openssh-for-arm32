@@ -27,8 +27,6 @@ function cross_compile_build_openssh() {
     --sysconfdir=$ssh_cfg_dir
 
   cross_compile_common_build 0 0 0
-  replace "PRIVSEP_PATH=$cross_compile_build_dir/empty" Makefile
-  make install-files
 
   popd
 }
