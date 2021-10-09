@@ -2,7 +2,7 @@
 This repo contains scripts necessary for building OpenSSH server and client for armv7l (use soft floating)
 If you have an arm board (root), it is convenient to login/transfer-data by ssh.
 
-## My Env (Step 1: Download Toolchain & Config)
+## 1. Setup Toolchain
 * `host`: Ubuntu 20.04, also tested on Ubuntu 16.04 docker image
 * Install Cross GCC Toolchain
 ```
@@ -17,7 +17,7 @@ Install utilities:
 sudo apt install git make cmake binutils
 ```
 
-## Clone this Repo
+## 2. Clone this Repo
 ```
 cd ~
 git clone https://github.com/rikka0w0/build-openssh-for-arm32.git
@@ -28,46 +28,55 @@ chmod +x *.sh
 * `zlib` (1.2.11)
 * `openssl` (1.0.2k)
 * `openssh` (7.2p2)
-See `url.txt`
+See `url.txt`, zlib and openssl match the version shipped with MR1100 firmware, so they don't need to be copied to the device.
 
-## Step 3: Generate key & authorized_keys
+## 3. Build Binaries
 ```
-$ ssh-keygen -f ./arm_ssh_cfg/arm_ssh_private_key_rsa
+./run.sh
+```
+OpenSSH binaries can be found in the `openssh` folder.
 
-#to tunnel with host without password on board
-$ cat ./arm_ssh_cfg/arm_ssh_private_key_rsa.pub >> ~/.ssh/authorized_keys
+## 4. Upload to MR1100
+* 1. You need to gain root access and use telnet to start a root shell, see:
+* 2. Edit `arm_ssh_deploy.sh` according to you setup.
+* 3. Run `python -m SimpleHTTPServer` or `python3 -m http.server` on the host machine.
+* 4. Run following command on the MR1100 shell:  
+```
+cd ~
+wget http://YOURIP:8000/arm_ssh_deploy.sh
+chmod +x arm_ssh_deploy.sh
+./arm_ssh_deploy.sh
+rm arm_ssh_deploy.sh
+```
+This script is downloaded to the MR1100 shell, upon running, it downloads binaries and configs,
+fix permissions and generate host key for sshd.
 
-#to login in board without password on host
-$ cat path-to-your-public-key > ./arm_ssh_cfg/authorized_keys
+The default sshd_config is in arm_ssh_cfg and it will be copied to `/etc/ssh` on the MR1100 device.
+By default, it will only allow lan users to login with password(by default, oelinux123 for root), the others
+have to use pubkey.
+
+## 5. Start the SSHD server
+```
+# Run on startup
+update-rc.d sshd.sh defaults
+
+# Start
+/etc/init.d/sshd.sh start
+
+# Stop
+/etc/init.d/sshd.sh stop
+
+# Disable autorun on startup
+update-rc.d -f sshd.sh remove
 ```
 
-## Step 4: Build on Host
-```
-$ bash run.sh
-#arm_ssh.tar would be generated
-```
-
-## Step 5: Enable SSH on Board
-```
-#copy arm_ssh.tar to board(/mnt) with tftp/nfs/sd-card
-#login in board with telnet/serial
-$ cd /mnt
-$ busybox tar -xvf arm_ssh.tar
-$ nohup sh /mnt/arm_ssh/enable_arm_openssh.sh &
-```
-
-**Note** in enable_arm_openssh.sh:
-1. my hostname is `david`
-2. my host ip is `192.168.1.101`, make sure your host and board on the same net
-3. the tunnel port is `22222`
-
-## Step 6: Try to Communicate with Your Board by SSH
+## 6. Try to Communicate with Your Board by SSH
 ```
 #login
 $ ssh root@your-board-ip -i path-to-your-private-key
 
 #ssh-tunnel
-$ ssh -p 22222 root@localhost -i path-to-your-private-key
+$ ssh root@localhost -i path-to-your-private-key
 
 #scp (bilateral)
 $ scp -r file/directory root@your-board-ip:path-on-board -i path-to-your-private-key

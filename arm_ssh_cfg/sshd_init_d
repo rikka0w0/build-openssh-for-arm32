@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+# start/restart/stop ssh server.
+
+if ! [ -x /usr/sbin/sshd ]; then
+        exit 0
+fi
+
+case "$1" in
+    start)
+        if [ -z $(pidof sshd) ]
+        then
+                echo -n "Starting ssh server:"
+                /usr/sbin/sshd
+                echo "."
+        else
+                echo "Server is running!"
+        fi
+        ;;
+    stop)
+        echo -n "Stopping ssh server:"
+        # kill active clients
+        for pid in $(pidof sshd)
+        do
+                [ "$pid" == "$$" ] && continue
+                [ -e "/proc/$pid/stat" ] && kill $pid
+        done
+        echo "."
+        ;;
+    restart)
+        echo -n "Restarting ssh server:"
+        echo -n " sshd "
+        killall -HUP sshd
+        echo "."
+        ;;
+    *)
+        echo "Usage: /etc/init.d/sshd {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
+exit 0

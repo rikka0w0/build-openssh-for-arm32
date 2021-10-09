@@ -1,13 +1,27 @@
-Port 22
-Protocol 2
 
-HostKey /etc/ssh/ssh_host_rsa_key
-HostKey /etc/ssh/ssh_host_dsa_key
-HostKey /etc/ssh/ssh_host_ecdsa_key
-HostKey /etc/ssh/ssh_host_ed25519_key
+#Port 22
+#AddressFamily any
+#ListenAddress 0.0.0.0
+#ListenAddress ::
 
-AuthorizedKeysFile /etc/ssh/authorized_keys
-#RSAAuthentication yes
-PubkeyAuthentication yes
+#LoginGraceTime 2m
+#PermitRootLogin prohibit-password
+#StrictModes yes
+#MaxAuthTries 6
+#MaxSessions 10
+
+# To disable tunneled clear text passwords, change to no here!
 PasswordAuthentication no
-StrictModes no
+PermitEmptyPasswords no
+
+#PubkeyAuthentication yes
+#AuthorizedKeysFile     .ssh/authorized_keys
+
+
+Subsystem       sftp    /usr/lib/sftp-server
+
+# Allow password login from local network
+Match Address 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+        PasswordAuthentication yes
+        PermitRootLogin yes
+
