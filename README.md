@@ -37,7 +37,7 @@ See `url.txt`, zlib and openssl match the version shipped with MR1100 firmware, 
 OpenSSH binaries can be found in the `openssh` folder.
 
 ## 4. Upload to MR1100
-* 1. You need to gain root access and use telnet to start a root shell, see:
+* 1. You need to gain root access and use telnet to start a root shell, see MR1100_ROOT.md or (this)[https://medium.com/@michael_58691/gaining-root-privileges-on-a-netgear-m1-mobile-router-mr1100-c769525d67d1].
 * 2. Edit `arm_ssh_deploy.sh` according to you setup.
 * 3. Run `python -m SimpleHTTPServer` or `python3 -m http.server` on the host machine.
 * 4. Run following command on the MR1100 shell:  

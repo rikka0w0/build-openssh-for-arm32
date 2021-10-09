@@ -1,4 +1,6 @@
 #!/bin/ash
+binsvr="http://YOURIP:8000/"
+pubkey="YOUR PUBKEY"
 
 # Change these to match your setep:
 # Binaries

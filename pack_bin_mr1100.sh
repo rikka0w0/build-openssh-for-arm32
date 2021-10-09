@@ -25,3 +25,5 @@ tar -czf $tar_name --exclude=$tar_name .
 wait
 mv $tar_name ../
 popd
+rm -r $mr1100_root
+
