@@ -1,14 +1,23 @@
 # build-openssh-for-arm32
+This repo contains scripts necessary for building OpenSSH server and client for armv7l (use soft floating)
 If you have an arm board (root), it is convenient to login/transfer-data by ssh.
 
 ## My Env (Step 1: Download Toolchain & Config)
-* `host`: Ubuntu 16.04
+* `host`: Ubuntu 16.04 (Docker)
 * `cross build toolchain`: gcc-linaro-5.4.1-2017.05-x86_64_arm-linux-gnueabihf (unpack to /opt/toolchian for me)
+```
+sudo apt install wget curl xz-utils
+cd /opt
+sudo wget https://releases.linaro.org/components/toolchain/binaries/4.9-2016.02/arm-linux-gnueabihf/gcc-linaro-4.9-2016.02-x86_64_arm-linux-gnueabihf.tar.xz
+sudo tar -xf gcc-linaro-4.9-2016.02-x86_64_arm-linux-gnueabihf.tar.xz
+sudo rm gcc-linaro-4.9-2016.02-x86_64_arm-linux-gnueabihf.tar.xz	# Delete the archieve to save some disk space
+```
 
 ## Libraries Version (Step 2: Download Relevant Libraries)
 * `zlib` (1.2.11)
-* `openssl` (1.1.1c)
-* `openssh` (8.0p1, downloaded from https://www.complang.tuwien.ac.at/doc/openssh-server/faq.html)
+* `openssl` (1.0.2c)
+* `openssh` (7.1p1)
+See `url.txt`
 
 ## Step 3: Generate key & authorized_keys
 ```

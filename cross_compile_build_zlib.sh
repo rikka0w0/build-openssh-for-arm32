@@ -13,8 +13,8 @@ set(CMAKE_INSTALL_PREFIX "\${CMAKE_CURRENT_SOURCE_DIR}/$cross_compile_build_dir"
 set(CMAKE_FIND_ROOT_PATH "$cross_compile_toolchain_dir/$cross_compile_abi")
 set(CMAKE_C_COMPILER     "${cross_compile_bin_prefix}gcc")
 set(CMAKE_CXX_COMPILER   "${cross_compile_bin_prefix}g++")
-set(CMAKE_C_FLAGS        "-O2 -fomit-frame-pointer -ftree-vectorize -mfpu=neon-vfpv4 -mfloat-abi=hard")
-set(CMAKE_CXX_FLAGS      "-O2 -fomit-frame-pointer -ftree-vectorize -mfpu=neon-vfpv4 -mfloat-abi=hard -std=c++11")
+set(CMAKE_C_FLAGS        "-O2 -fomit-frame-pointer -ftree-vectorize -mfloat-abi=soft")
+set(CMAKE_CXX_FLAGS      "-O2 -fomit-frame-pointer -ftree-vectorize -mfloat-abi=soft -std=c++11")
 eof
 
 function cross_compile_build_zlib() {
