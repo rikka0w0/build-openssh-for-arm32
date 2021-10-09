@@ -3,17 +3,28 @@ This repo contains scripts necessary for building OpenSSH server and client for 
 If you have an arm board (root), it is convenient to login/transfer-data by ssh.
 
 ## My Env (Step 1: Download Toolchain & Config)
-* `host`: Ubuntu 16.04 (Docker)
-* `cross build toolchain`: gcc-linaro-5.4.1-2017.05-x86_64_arm-linux-gnueabihf (unpack to /opt/toolchian for me)
+* `host`: Ubuntu 20.04, also tested on Ubuntu 16.04 docker image
+* Install Cross GCC Toolchain
 ```
 sudo apt install wget curl xz-utils
 cd /opt
-sudo wget https://releases.linaro.org/components/toolchain/binaries/4.9-2016.02/arm-linux-gnueabihf/gcc-linaro-4.9-2016.02-x86_64_arm-linux-gnueabihf.tar.xz
-sudo tar -xf gcc-linaro-4.9-2016.02-x86_64_arm-linux-gnueabihf.tar.xz
-sudo rm gcc-linaro-4.9-2016.02-x86_64_arm-linux-gnueabihf.tar.xz	# Delete the archieve to save some disk space
+sudo wget https://releases.linaro.org/components/toolchain/binaries/4.9-2016.02/arm-linux-gnueabi/gcc-linaro-4.9-2016.02-x86_64_arm-linux-gnueabi.tar.xz
+sudo tar -xf gcc-linaro-4.9-2016.02-x86_64_arm-linux-gnueabi.tar.xz
+sudo rm gcc-linaro-4.9-2016.02-x86_64_arm-linux-gnueabi.tar.xz	# Delete the archieve to save some disk space
+```
+Install utilities:
+```
+sudo apt install git make cmake binutils
 ```
 
-## Libraries Version (Step 2: Download Relevant Libraries)
+## Clone this Repo
+```
+cd ~
+git clone https://github.com/rikka0w0/build-openssh-for-arm32.git
+cd build-openssh-for-arm32
+chmod +x *.sh
+```
+### Downloaded Relevant Libraries
 * `zlib` (1.2.11)
 * `openssl` (1.0.2k)
 * `openssh` (7.2p2)

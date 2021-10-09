@@ -3,7 +3,7 @@ set -ex
 cores=`nproc`
 cross_compile_build_dir="armbuild"
 cross_compile_abi='arm-linux-gnueabi'
-cross_compile_toolchain_dir="/root/gcc-linaro-4.9-2016.02-x86_64_arm-linux-gnueabi"
+cross_compile_toolchain_dir="/opt/gcc-linaro-4.9-2016.02-x86_64_arm-linux-gnueabi"
 cross_compile_bin_dir="$cross_compile_toolchain_dir/bin"
 cross_compile_bin_prefix="$cross_compile_bin_dir/$cross_compile_abi-"
 root_dir=$PWD

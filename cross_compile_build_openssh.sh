@@ -5,6 +5,7 @@
 function cross_compile_build_openssh() {
   target_os="arm"
 
+  ssh_prefix="/usr"
   ssh_privsep_usr="root"
   ssh_privsep_path="/etc/ssh/empty"
   ssh_pid_dir="/etc/ssh"
@@ -24,7 +25,8 @@ function cross_compile_build_openssh() {
     --with-pid-dir=$ssh_pid_dir \
     --with-zlib=$zlib_arm_build_dir \
     --with-ssl-dir=$openssl_arm_build_dir \
-    --sysconfdir=$ssh_cfg_dir
+    --sysconfdir=$ssh_cfg_dir \
+    --prefix=$ssh_prefix
 
   cross_compile_common_build 0 0 0
 
